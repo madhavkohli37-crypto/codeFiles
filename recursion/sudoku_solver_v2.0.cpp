@@ -1,11 +1,4 @@
-/*
-2025
-Sublime Text
-C++
-#All Rights Reserved
-Logic and Code by Madhav Kohli
-Taught by Coding Sir
-*/
+
 #include<bits/stdc++.h>
 using namespace std;
 bool flag = 0;
