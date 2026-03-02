@@ -1,6 +1,7 @@
 #include<algorithm>
 #include"TreeNode.h"
 #include<utility>
+#include<queue>
 template<typename T>
 class Tree{
   public:
@@ -156,9 +157,27 @@ class Tree{
     }
     void printalllevels(TreeNode<T>*root) {
       int h=height(root);
-      for(int i=1;i<=h;i++) {
+      for(int i=1;i<=h;i++) {//because number of levels = height of tree 
         printkthlevel(root,i);
         cout<<endl;
       }
+    }
+    void bfs(TreeNode<T>*root) {
+      queue<TreeNode<T>*>q;
+      q.push(root);
+      while(!q.empty()) {
+        TreeNode<T>*temp=q.front();
+        q.pop();
+        cout<<temp->value<<" ";
+        if(temp->left!=NULL) {
+          q.push(temp->left);
+        }
+        if(temp->right!=NULL) {
+          q.push(temp->right);
+        }
+      }
+    }
+    void bfs2(TreeNode<T>*root) {
+      
     }
 };
