@@ -23,5 +23,7 @@ int main() {
   t.preorder(ROOT);
   cout<<endl;
   cout<<t.HBT(ROOT).first<<endl;
-  
+  t.printkthlevel(ROOT,4);
+  cout<<endl;
+  t.printalllevels(ROOT);
 }
