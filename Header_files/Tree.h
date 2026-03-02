@@ -150,10 +150,8 @@ class Tree{
         cout<<root->value<<" ";
         return;
       }
-      cout<<root->value<<" ";
-      k--;
-      printkthlevel(root->left,k);
-      printkthlevel(root->right,k);
+      printkthlevel(root->left,k-1);
+      printkthlevel(root->right,k-1);
       return;
     }
     void printalllevels(TreeNode<T>*root) {
