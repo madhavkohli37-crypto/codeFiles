@@ -142,4 +142,25 @@ class Tree{
       x->right=createHBT(a,mid+1,e);
       return x;
     }
+    void printkthlevel(TreeNode<T>*root,int k) {
+      if(root==NULL) {
+        return;
+      }
+      if(k==1) {
+        cout<<root->value<<" ";
+        return;
+      }
+      cout<<root->value<<" ";
+      k--;
+      printkthlevel(root->left,k);
+      printkthlevel(root->right,k);
+      return;
+    }
+    void printalllevels(TreeNode<T>*root) {
+      int h=height(root);
+      for(int i=1;i<=h;i++) {
+        printkthlevel(root,i);
+        cout<<endl;
+      }
+    }
 };
