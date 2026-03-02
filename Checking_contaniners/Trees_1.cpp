@@ -21,5 +21,7 @@ int main() {
   int a[]{1,2,3,4,5,6,7,8,9,10};
   TreeNode<int>*ROOT=t.createHBT(a,0,9);
   t.preorder(ROOT);
+  cout<<endl;
+  cout<<t.HBT(ROOT).first<<endl;
   
 }
