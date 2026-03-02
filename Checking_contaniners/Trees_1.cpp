@@ -25,5 +25,7 @@ int main() {
   cout<<t.HBT(ROOT).first<<endl;
   t.printkthlevel(ROOT,4);
   cout<<endl;
-  t.printalllevels(ROOT);
+  t.printalllevels(t.root);//used to print the tree level by level
+  t.bfs(t.root);
+  cout<<endl;
 }
