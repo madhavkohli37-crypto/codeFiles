@@ -1,5 +1,5 @@
 /*
-if we do not have the chance to do any of the two i.e we can neither send tmp as a parameter
+if we do not have the chance to do any of the two i.e we can neither send temp as a parameter
 nor we can use temp globally 
 we can then use the concept of static variables
 */
@@ -24,4 +24,5 @@ void F(int n/*,int temp*/) {
 }
 int main() {
   F(1/*,0*/);
+
 }
