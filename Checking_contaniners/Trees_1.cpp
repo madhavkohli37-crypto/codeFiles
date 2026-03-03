@@ -28,4 +28,6 @@ int main() {
   t.printalllevels(t.root);//used to print the tree level by level
   t.bfs(t.root);
   cout<<endl;
+  t.bfs2(ROOT);
+  cout<<endl;
 }
