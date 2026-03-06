@@ -30,4 +30,9 @@ int main() {
   cout<<endl;
   t.bfs2(ROOT);
   cout<<endl;
+  int pre[]{1, 2, 4, 5, 3, 7 };
+  int in[]{4, 2, 5, 1, 3, 7 };
+  TreeNode<int>*ROOT2=t.BuildTreefromIOPO(pre,in,0,5);
+  t.preorder(ROOT2);
+  cout<<endl;
 }
