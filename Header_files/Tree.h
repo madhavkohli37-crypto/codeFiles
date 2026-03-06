@@ -199,4 +199,22 @@ public:
             }
         }
     }
+    TreeNode<T>* BuildTreefromIOPO(T*pre,T*in,int s,int e) {
+      if(s>e) {
+        return NULL;
+      }
+      static int i=0;
+      TreeNode<T>*x=new TreeNode<T>(pre[i]);
+      int index=-1;
+      for(int j=s;j<=e;j++) {
+        if(in[j]==pre[i]) {
+          index=j;
+          break;
+        }
+      }
+      i++;
+      x->left=BuildTreefromIOPO(pre,in,s,index-1);
+      x->right=BuildTreefromIOPO(pre,in,index+1,e);
+      return x;
+    }
 };
