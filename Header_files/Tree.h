@@ -217,4 +217,76 @@ public:
       x->right=BuildTreefromIOPO(pre,in,index+1,e);
       return x;
     }
+     vector<vector<T>> bfs3(TreeNode<T>* root) {
+      vector<vector<T>> ans;
+      vector<T> t;
+        if (root == NULL) {
+            return ans;
+        }
+        queue<TreeNode<T>*> q;
+        q.push(root);
+        q.push(NULL);
+        while (!q.empty()) {
+            TreeNode<T>* temp = q.front();
+            q.pop();
+            if (temp == NULL) {
+                if (!q.empty()) {
+                    q.push(NULL);
+                    ans.push_back(t);
+                    t.clear();
+                } else {
+                    ans.push_back(t);
+                }
+            } else {
+                t.push_back(temp->value);
+                if (temp->left != NULL) {
+                    q.push(temp->left);
+                }
+                if (temp->right != NULL) {
+                    q.push(temp->right);
+                }
+            }
+        }
+        return ans;
+    }
+    vector<T> LeftView(TreeNode<T>*root) {
+      vector<T> ans;
+      if(root==NULL) {
+        return ans;
+      }
+      vector<vector<T>>help=bfs3(root);
+      for(int i=0;i<help.size();i++) {
+        ans.push_back(help[i][0]);
+      }
+      return ans;
+    }
+    vector<T> RightView(TreeNode<T>*root) {
+      vector<T> ans;
+      if(root==NULL) {
+        return ans;
+      }
+      vector<vector<T>>help=bfs3(root);
+      for(int i=0;i<help.size();i++) {
+        ans.push_back(help[i][help[i].size()-1]);
+      }
+      return ans;
+    }
+    int fl=0;
+vector<T>ans;
+void rightSideView_1(TreeNode<T>* root,int cl) {
+    if(root==NULL) {
+        return;
+    }
+    if(cl>fl) {
+        ans.push_back(root->val);
+        fl++;
+    }
+    rightSideView_1(root->right,cl+1);
+    rightSideView_1(root->left,cl+1);
+    return;
+}
+    vector<T> rightSideView(TreeNode<T>* root) {
+        rightSideView_1(root,1);
+        return ans;
+    }
 };
