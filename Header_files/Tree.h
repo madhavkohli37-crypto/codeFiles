@@ -289,4 +289,33 @@ void rightSideView_1(TreeNode<T>* root,int cl) {
         rightSideView_1(root,1);
         return ans;
     }
+    TreeNode<T>* insertinBST(TreeNode<T>*root,T value) {
+      if(root==nullptr) {
+        TreeNode<T>*x=new TreeNode(value);
+        return x ;
+      }
+      if(value==-1) {
+        return nullptr;
+      } 
+      if(value>root->value) {
+        root->right=insertinBST(root->right,value);
+      }
+      else {
+        root->left=insertinBST(root->left,value);
+      }
+      return root;
+    }
+    TreeNode<T>* createBST() {
+      int x;
+      cin>>x;
+      if(x==-1) {
+        return nullptr;
+      }
+      TreeNode<T>*root=new TreeNode(x);
+      int temp;
+      while(cin>>temp) {
+        insertinBST(root,temp);
+      }
+      return root;
+    }
 };
