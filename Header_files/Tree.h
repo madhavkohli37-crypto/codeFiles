@@ -318,4 +318,18 @@ void rightSideView_1(TreeNode<T>* root,int cl) {
       }
       return root;
     }
+    bool searchinBST(TreeNode<T>*root,T value) {
+      if(root==nullptr) {
+        return false;
+      }
+      if(value>root->value) {
+        return searchinBST(root->right,value);
+      }
+      if(value<root->value) {
+        return searchinBST(root->left,value);
+      }
+      if(value==root->value) {
+        return true;
+      }
+    }
 };
