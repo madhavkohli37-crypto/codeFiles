@@ -347,4 +347,38 @@ void rightSideView_1(TreeNode<T>* root,int cl) {
         return true;
       }
     }
+    TreeNode<T>* lowestCommonAncestor1(TreeNode<T>* root, TreeNode<T>* p, TreeNode<T>* q) {
+        if (root->value == p->value) {
+            if (search(root->left, q->value) or search(root->right, q->value)) {
+                return root;
+            } else {
+                return NULL;
+            }
+        }
+        if (search(root->left, p->value)) {
+            if (search(root->right, q->value)) {
+                return root;
+            } else {
+                return lowestCommonAncestor1(root->left, p, q);
+            }
+        } else {
+            if (search(root->left, q->value)) {
+                return root;
+            } else {
+                return lowestCommonAncestor1(root->right, p, q);
+            }
+        }
+        return nullptr;
+    }
+    TreeNode<T>* lowestCommonAncestor(TreeNode<T>* root, TreeNode<T>* p, TreeNode<T>* q) {
+        TreeNode<T>* ans1 = lowestCommonAncestor1(root, p, q);
+        TreeNode<T>* ans2 = lowestCommonAncestor1(root, q, p);
+        TreeNode<T>* ans;
+        if (ans1 == NULL) {
+            ans = ans2;
+        } else {
+            ans = ans1;
+        }
+        return ans;
+    }
 };
