@@ -199,27 +199,27 @@ public:
             }
         }
     }
-    TreeNode<T>* BuildTreefromIOPO(T*pre,T*in,int s,int e) {
-      if(s>e) {
-        return NULL;
-      }
-      static int i=0;
-      TreeNode<T>*x=new TreeNode<T>(pre[i]);
-      int index=-1;
-      for(int j=s;j<=e;j++) {
-        if(in[j]==pre[i]) {
-          index=j;
-          break;
+    TreeNode<T>* BuildTreefromIOPO(T* pre, T* in, int s, int e) {
+        if (s > e) {
+            return NULL;
         }
-      }
-      i++;
-      x->left=BuildTreefromIOPO(pre,in,s,index-1);
-      x->right=BuildTreefromIOPO(pre,in,index+1,e);
-      return x;
+        static int i = 0;
+        TreeNode<T>* x = new TreeNode<T>(pre[i]);
+        int index = -1;
+        for (int j = s; j <= e; j++) {
+            if (in[j] == pre[i]) {
+                index = j;
+                break;
+            }
+        }
+        i++;
+        x->left = BuildTreefromIOPO(pre, in, s, index - 1);
+        x->right = BuildTreefromIOPO(pre, in, index + 1, e);
+        return x;
     }
-     vector<vector<T>> bfs3(TreeNode<T>* root) {
-      vector<vector<T>> ans;
-      vector<T> t;
+    vector<vector<T>> bfs3(TreeNode<T>* root) {
+        vector<vector<T>> ans;
+        vector<T> t;
         if (root == NULL) {
             return ans;
         }
@@ -249,87 +249,86 @@ public:
         }
         return ans;
     }
-    vector<T> LeftView(TreeNode<T>*root) {
-      vector<T> ans;
-      if(root==NULL) {
+    vector<T> LeftView(TreeNode<T>* root) {
+        vector<T> ans;
+        if (root == NULL) {
+            return ans;
+        }
+        vector<vector<T>> help = bfs3(root);
+        for (int i = 0; i < help.size(); i++) {
+            ans.push_back(help[i][0]);
+        }
         return ans;
-      }
-      vector<vector<T>>help=bfs3(root);
-      for(int i=0;i<help.size();i++) {
-        ans.push_back(help[i][0]);
-      }
-      return ans;
     }
-    vector<T> RightView(TreeNode<T>*root) {
-      vector<T> ans;
-      if(root==NULL) {
+    vector<T> RightView(TreeNode<T>* root) {
+        vector<T> ans;
+        if (root == NULL) {
+            return ans;
+        }
+        vector<vector<T>> help = bfs3(root);
+        for (int i = 0; i < help.size(); i++) {
+            ans.push_back(help[i][help[i].size() - 1]);
+        }
         return ans;
-      }
-      vector<vector<T>>help=bfs3(root);
-      for(int i=0;i<help.size();i++) {
-        ans.push_back(help[i][help[i].size()-1]);
-      }
-      return ans;
     }
-    int fl=0;
-vector<T>ans;
-void rightSideView_1(TreeNode<T>* root,int cl) {
-    if(root==NULL) {
+    int fl = 0;
+    vector<T> ans;
+    void rightSideView_1(TreeNode<T>* root, int cl) {
+        if (root == NULL) {
+            return;
+        }
+        if (cl > fl) {
+            ans.push_back(root->val);
+            fl++;
+        }
+        rightSideView_1(root->right, cl + 1);
+        rightSideView_1(root->left, cl + 1);
         return;
     }
-    if(cl>fl) {
-        ans.push_back(root->val);
-        fl++;
-    }
-    rightSideView_1(root->right,cl+1);
-    rightSideView_1(root->left,cl+1);
-    return;
-}
     vector<T> rightSideView(TreeNode<T>* root) {
-        rightSideView_1(root,1);
+        rightSideView_1(root, 1);
         return ans;
     }
-    TreeNode<T>* insertinBST(TreeNode<T>*root,T value) {
-      if(root==nullptr) {
-        TreeNode<T>*x=new TreeNode(value);
-        return x ;
-      }
-      if(value==-1) {
-        return nullptr;
-      } 
-      if(value>root->value) {
-        root->right=insertinBST(root->right,value);
-      }
-      else {
-        root->left=insertinBST(root->left,value);
-      }
-      return root;
+    TreeNode<T>* insertinBST(TreeNode<T>* root, T value) {
+        if (root == nullptr) {
+            TreeNode<T>* x = new TreeNode(value);
+            return x;
+        }
+        if (value == -1) {
+            return nullptr;
+        }
+        if (value > root->value) {
+            root->right = insertinBST(root->right, value);
+        } else {
+            root->left = insertinBST(root->left, value);
+        }
+        return root;
     }
     TreeNode<T>* createBST() {
-      int x;
-      cin>>x;
-      if(x==-1) {
-        return nullptr;
-      }
-      TreeNode<T>*root=new TreeNode(x);
-      int temp;
-      while(cin>>temp) {
-        insertinBST(root,temp);
-      }
-      return root;
+        int x;
+        cin >> x;
+        if (x == -1) {
+            return nullptr;
+        }
+        TreeNode<T>* root = new TreeNode(x);
+        int temp;
+        while (cin >> temp) {
+            insertinBST(root, temp);
+        }
+        return root;
     }
-    bool searchinBST(TreeNode<T>*root,T value) {
-      if(root==nullptr) {
-        return false;
-      }
-      if(value>root->value) {
-        return searchinBST(root->right,value);
-      }
-      if(value<root->value) {
-        return searchinBST(root->left,value);
-      }
-      if(value==root->value) {
-        return true;
-      }
+    bool searchinBST(TreeNode<T>* root, T value) {
+        if (root == nullptr) {
+            return false;
+        }
+        if (value > root->value) {
+            return searchinBST(root->right, value);
+        }
+        if (value < root->value) {
+            return searchinBST(root->left, value);
+        }
+        if (value == root->value) {
+            return true;
+        }
     }
 };
