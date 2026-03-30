@@ -59,10 +59,10 @@ class HashMap{
     }
     }
     void print() {
-      cout<<cs<<endl;
       MapNode<T>*head;
       for(int i=0;i<ts;i++) {
         head=table[i];
+        cout<<i<<" ). ";
         while(head!=NULL) {
           cout<<head->key<<" "<<head->value<<" --> ";
           head=head->next;
