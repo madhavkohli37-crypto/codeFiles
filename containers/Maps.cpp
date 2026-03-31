@@ -28,8 +28,9 @@ int main() {
         // mp.insert(p);
         // ump.insert(p);
         //now we are actually updating 
+        //we are able to do this because by default every key of the map has value 0 o we can actually update it
         mp[s]=x;//currently the unordered map will be empty because we never actually
-        // insrted in it
+        // inserted in it
         ump[s]=x;
     }
     for(map<string,int>::iterator it=mp.begin();it!=mp.end();it++) {
