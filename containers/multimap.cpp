@@ -20,5 +20,9 @@ for(int i=0;i<n;i++) {
 for(multimap<string,int>::iterator it=mp.begin();it!=mp.end();it++) {
     cout<<it->first<<" "<<it->second<<endl;
 }
+// now in case of multimap the mp.count(key) returns the number of times key comes in the map
+cout<<mp.count("Madhav")<<endl;;
+// mp.find(key) returns the iterator of the first index where the key is found
+// int x=(mp.find("Madhav")-mp.begin());//we cannot do this
 
 }
