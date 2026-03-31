@@ -14,7 +14,7 @@ int main() {
         int x;
         cin>>s>>x;
         pair<string,int>p=make_pair(s,x);
-        //currently we are only inserting so duplicate key would not effect anything
+        //Currently we are only inserting so duplicate key would not effect anything
         // because a unique key only does once in the map
         // but the value of the key can be updated anytime
         /*
@@ -27,8 +27,8 @@ int main() {
         */
         // mp.insert(p);
         // ump.insert(p);
-        //now we are actually updating 
-        //we are able to do this because by default every key of the map has value 0 so we can actually update it
+        //Now we are actually updating 
+        //We are able to do this because by default every key of the map has value 0 so we can actually update it
         mp[s]=x;//currently the unordered map will be empty because we never actually
         // inserted in it
         ump[s]=x;
@@ -40,4 +40,8 @@ int main() {
     for(pair<string,int>x:ump) {
         cout<<x.first<<" "<<x.second<<endl;
     }
+    // Hence we can actually do this also also
+    cout<<mp["Madhav"]<<endl;
+    //This is the major reason why we created map beacuse now the index can also be 
+    // a string as we can se we are fetching mp["Madhav"]
 }
