@@ -42,6 +42,7 @@ int main() {
     }
     // Hence we can actually do this also also
     cout<<mp["Madhav"]<<endl;
+    cout<<mp.count("Madhav");//isme sirf eek baar hi jaati hai values
     //This is the major reason why we created map beacuse now the index can also be 
     // a string as we can se we are fetching mp["Madhav"]
 }
