@@ -1,7 +1,9 @@
-#include "TreeNode.h"
+#include "MapNode.h"
 #include <algorithm>
+#include<vector>
 #include <queue>
 #include <utility>
+#include<map>
 template <typename T> class Tree {
 public:
     TreeNode<T>* root;
@@ -380,5 +382,55 @@ void rightSideView_1(TreeNode<T>* root,int cl) {
             ans = ans1;
         }
         return ans;
+    }
+     map<int,pair<int,T>>mp;
+    map<int,pair<int,T>> F(TreeNode<T>*root,int c,int h) {
+      if(root==NULL) {
+        return mp;
+      }
+      if(mp.count(c)==0) {
+          mp[c]={h,root->value};
+      }
+      else {
+          if(mp[c].first>h) {
+              mp[c]={h,root->value};
+          }
+      }
+      F(root->left,c-1,h+1);
+      F(root->right,c+1,h+1);
+      return mp;
+    }
+    vector<T> TopView(TreeNode<T> *root) {
+         vector<T>v;
+      F(root,0,0);
+      for(pair<int,pair<int,T>>p:mp) {
+        v.push_back(p.second.second);
+      }
+      return v;
+    }
+     map<int,pair<int,T>>mp1;
+    void F1(TreeNode<T>*root,int c,int h) {
+      if(root==NULL) {
+        return ;
+      }
+      if(mp1.count(c)==0) {
+          mp1[c]={h,root->value};
+      }
+      else {
+          if(mp1[c].first<=h) {
+              mp1[c]={h,root->value};
+          }
+      }
+      F1(root->left,c-1,h+1);
+      F1(root->right,c+1,h+1);
+      return ;
+    }
+    vector<T> BottomView(TreeNode<T> *root) {
+         vector<T>v;
+      F1(root,0,0);
+      for(pair<int,pair<int,T>>p:mp1) {
+        v.push_back(p.second.second);
+      }
+      return v;
     }
 };
