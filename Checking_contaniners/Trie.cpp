@@ -7,6 +7,6 @@ int main() {
   while(cin>>s) {
     t.insert(s);
   }
-  cout<<t.search("Madha");
-  
+  cout<<t.search("Madha")<<endl;
+  cout<<t.SUP("Maya")<<endl;
 }
