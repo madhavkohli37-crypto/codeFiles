@@ -9,4 +9,5 @@ int main() {
   }
   cout<<t.search("Madha")<<endl;
   cout<<t.SUP("Maya")<<endl;
+  cout<<t.LongestCommonPrefix("flow",3)<<endl;
 }
