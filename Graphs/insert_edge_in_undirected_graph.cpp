@@ -6,6 +6,8 @@
 using namespace std;
 #define int long long
 template<typename T>
+// this is insertion in an undirected graph
+
 class Graph{
 private:
 map<T,list<T>>mp;
@@ -20,7 +22,7 @@ void addEdge(T x,T y,bool direction) {
 int32_t main() {
     int n,m;
     cin>>n>>m;
-    bool direction=0;
+    bool direction=0;//since undirected grpah we assume that direction is 0
     Graph<int> gh;
     for(int i=0;i<m;i++) {
         int x,y;
