@@ -13,6 +13,7 @@ public:
 	}
 	car (int year, string name, string color) {
 		cout << "Inside my parameterized constructor\n";
+		// this keyword is used to access the parameter of the class not the function i.e. in this case this is used to access the year of the car class not the year passed in the function
 		this->year = year;
 		this->name = name;
 		this->color = color;
