@@ -5,9 +5,8 @@
 #include<list>
 using namespace std;
 #define int long long
+// we are creating undirected/directed unweighted graph
 template<typename T>
-// this is insertion in an undirected graph
-
 class Graph{
 private:
 map<T,list<T>>mp;
@@ -17,18 +16,30 @@ void addEdge(T x,T y,bool direction) {
     if(!direction) {
         mp[y].push_back(x);
     }
+    return;
+}
+// print the adjancey list 
+void print() {
+    for(pair<int,list<int>> it:mp) {
+        cout<<(it).first<<" --> ";
+        for(int x:(it).second) {
+            cout<<x<<" ";
+        }
+        cout<<endl;
+    }
 }
 };
 int32_t main() {
-    int n,m;
-    cin>>n>>m;
-    bool direction=0;//since undirected grpah we assume that direction is 0
+    int m,n;
+    cin>>m>>n;
+    bool direction=1;
     Graph<int> gh;
     for(int i=0;i<m;i++) {
         int x,y;
         cin>>x>>y;
         gh.addEdge(x,y,direction);
     }
+    gh.print();
 }
 
    
