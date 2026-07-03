@@ -34,6 +34,7 @@ void print() {
         cout<<endl;
     }
 }
+// The code is valid for single component only
 bool dfs_helper(T value,T parent) {
     visited[value]=true;
     for(int x:mp[value]) {
@@ -43,7 +44,7 @@ bool dfs_helper(T value,T parent) {
             return true;
         }
         }
-        else if(value!=parent) {
+        else if(x!=parent) {
             return true;
         }   
     }
