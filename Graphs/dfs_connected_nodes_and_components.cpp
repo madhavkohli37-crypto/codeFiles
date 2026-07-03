@@ -39,7 +39,7 @@ void dfs_helper(T value) {
         v.push_back(value);
         visited[value]=true;
         for(int x:mp[value]) {
-            bfs_helper(x);
+            dfs_helper(x);
         }
     }
     return;
@@ -47,7 +47,7 @@ void dfs_helper(T value) {
 void dfs(T value) {
     if(!visited[value]) {
         count++;
-        bfs_helper(value);
+        dfs_helper(value);
         CC.push_back(v);
         v.clear();
     }
