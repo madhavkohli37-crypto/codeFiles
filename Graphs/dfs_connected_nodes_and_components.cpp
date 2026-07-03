@@ -34,7 +34,7 @@ void print() {
         cout<<endl;
     }
 }
-void bfs_helper(T value) {
+void dfs_helper(T value) {
     if(!visited[value]) {
         v.push_back(value);
         visited[value]=true;
@@ -44,7 +44,7 @@ void bfs_helper(T value) {
     }
     return;
 }
-void bfs(T value) {
+void dfs(T value) {
     if(!visited[value]) {
         count++;
         bfs_helper(value);
@@ -55,7 +55,7 @@ void bfs(T value) {
 }
 int CCC() {
     for(pair<int,list<int>>p:mp) {
-         bfs(p.first);
+         dfs(p.first);
     }
     return count;
 }
