@@ -1,19 +1,148 @@
-// ludo_game.cpp - Complete Ludo with custom board
-#include <iostream>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+#include<iostream>
+#include<vector>
+#include<cstring>
+#include<utility>
+#include<algorithm>
+#include<ctime>
+#include<climits>
+#include<cstring>
 using namespace std;
-
-// ============================================================
-// PAWN CLASS
-// ============================================================
+class welcome{
+    public:
+    void showTitle() {
+        cout << "\n";
+        cout << "  _     _  _   _  ____    ___  \n";
+        cout << " | |   | || | | ||  _    / _   \n";
+        cout << " | |   | || | | || | | || | | |\n";
+        cout << " | |___| || |_| || |_| || |_| |\n";
+        cout << " |_____|_|   __/ |____/    __/ \n";
+        cout << "\n";
+        cout << "Welcome to the Classic Game of Ludo!\n";
+        cout << "====================================\n\n";
+    }
+    void pb(vector<string>&board ,int n) {
+        if(n==2) {
+            board = {
+    "  A   A     . . .            ",
+    "            . . *            ",
+    "  A   A     * . .            ",
+    "            . . .            ",
+    "            . . .            ",
+    ". * . . . . . H . . . . * . .",
+    ". 1 1 1 1 1 H H H 2 2 2 2 2 .",
+    ". . * . . . . H . . . . . * .",
+    "            . . .            ",
+    "            . . .            ",
+    "            . . *     B   B  ",
+    "            * . .            ",
+    "            . . .     B   B  ",
+};
+        }
+        else if(n==3) {
+              board= {
+    "  A   A     . 2 .     B   B ",
+    "            . 2 *           ",
+    "  A   A     * 2 .     B   B ",
+    "            . 2 .           ",
+    "            . 2 .           ",
+    ". * . . . . . H . . . . * . .",
+    ". 1 1 1 1 1 H H H 3 3 3 3 3 .",
+    ". . * . . . . H . . . . . * .",
+    "            . . .           ",
+    "            . . .           ",
+    "            . . *     C   C ",
+    "            * . .           ",
+    "            . . .     C   C ",
+};
+        }
+        else {
+            board= {
+    "  A   A     . . .     B   B ",
+    "            . 2 *           ",
+    "  A   A     * 2 .     B   B ",
+    "            . 2 .           ",
+    "            . 2 .           ",
+    ". * . . . . . H . . . . * . .",
+    ". 1 1 1 1 1 H H H 3 3 3 3 3 .",
+    ". . * . . . . H . . . . . * .",
+    "            . 4 .           ",
+    "            . 4 .           ",
+    "  D   D     . 4 *     C   C ",
+    "            * 4 .           ",
+    "  D   D     . . .     C   C ",
+};
+        }
+        cout<<"\n\nInitial board :-\n\n";
+        for(string s:board) {
+            cout<<s<<endl;
+        }
+    }
+    void th() {
+        cout<<"Kindly Enter the number of players :(2-4)";
+    }
+    bool th2(int n) {
+        
+        if(n==2) {
+            cout<<"The number of players selected are "<<n<<endl;
+        cout<<"Houses information :- \n";
+             cout<<"Player 1 --> House A \n";
+        cout<<"Player 2 --> House B \n";
+        }
+        else if(n==3) {
+            cout<<"The number of players selected are "<<n<<endl;
+        cout<<"Houses information :- \n";
+            cout<<"Player 1 --> House A \n";
+        cout<<"Player 2 --> House B \n";
+        cout<<"Player 3 --> House C \n";
+        }
+        else if(n==4) {
+            cout<<"The number of players selected are "<<n<<endl;
+        cout<<"Houses information :- \n";
+        cout<<"Player 1 --> House A \n";
+        cout<<"Player 2 --> House B \n";
+        cout<<"Player 3 --> House C \n";
+        cout<<"Player 4 --> House D \n";
+        }
+        else {
+            cout<<"You have selected "<<n<<" which is an ";
+            cout<<"Invalid selection ;\n";
+            cout<<"Kindly start the game again and make a valid selection for number of players b/w 1 & 4\n";
+            return false;
+        }
+        cout<<"Press Enter key to continue :";
+        cin.get();
+        cout<<"\n";
+        return true;
+    }
+};
+vector<int>F(int currentplayer,int t6,vector<int>&numbers) {
+    cout << "Press Enter to roll the dice --> ";
+    cin.get();
+    int diceRoll=(rand()%6)+1;
+    numbers.push_back(diceRoll);
+    cout << "\nPlayer " << currentplayer << " rolled a " << diceRoll << "!\n";
+    if(diceRoll==6 and t6<2) {
+        t6++;
+        cout<<"You got a 6 so you can roll again\n";
+        F(currentplayer,t6,numbers);
+    }
+    else if(diceRoll==6) {
+        cout<<"you got 3 6's in a row hence your turn is terminated!\n";
+        numbers.clear();
+    }
+        return numbers;
+}
+vector<int> turn(int currentplayer) {
+    int t6=0;
+vector<int>numbers;
+    return F(currentplayer,t6,numbers);
+}
 
 class Pawn {
 public:
-    int position;      // -1 = base, 0-56 = track/home
-    bool isHome;
-    bool isActive;
+    int position;      // -1 = in base, 0-56 = track/home stretch
+    bool isHome;       // true if reached center H (position 56)
+    bool isActive;     // true if on track
 
     Pawn() {
         position = -1;
@@ -21,24 +150,24 @@ public:
         isActive = false;
     }
 };
-
-// ============================================================
-// PLAYER CLASS
-// ============================================================
-
 class Player {
 public:
-    char house;
-    int startOffset;
-    Pawn pawns[4];
+    char house;           // 'A', 'B', 'C', 'D'
+    int startOffset;      // Where they enter outer track
+    Pawn pawns[4];        // 4 pawns each
 
     Player() {}
-
+// parameterised constructor
+// initially house a initial is 0
+// house b initial 13
+// house c iitial26
+// house d initial 39
+// (for generalisation)
     Player(char h, int offset) {
         house = h;
         startOffset = offset;
     }
-
+//returns the number of pawns that are at home
     int pawnsAtHome() {
         int count = 0;
         for (int i = 0; i < 4; i++) {
@@ -66,213 +195,11 @@ public:
         }
     }
 };
-
-// ============================================================
-// BOARD DESIGN (13x13 grid)
-// ============================================================
-
-class Board {
-public:
-    // The base board layout (13 rows, each 29 chars wide for spacing)
-    vector<string> baseBoard;
-
-    // Track coordinates: 52 positions mapped to (row, col)
-    // Path goes clockwise around the center cross
-    int trackRow[52];
-    int trackCol[52];
-
-    // Safe spots (indices in the 52-position track)
-    int safeSpots[8];
-
-    // Home stretch coordinates for each player
-    // Player A=0, B=1, C=2, D=3
-    int homeStretchRow[4][5];
-    int homeStretchCol[4][5];
-
-    // Base coordinates for each player (4 pawns each)
-    int baseRow[4][4];
-    int baseCol[4][4];
-
-    Board() {
-        initBoard();
-        initTrack();
-        initSafeSpots();
-        initHomeStretches();
-        initBases();
-    }
-
-    void initBoard() {
-        baseBoard = {
-            "  A A A     . . .     B B B  ",
-            "  A A A     . . .     B B B  ",
-            "  A A A     * . .     B B B  ",
-            "            . . .            ",
-            "            . . .            ",
-            ". * . . . . . H . . . . * . .",
-            ". 1 1 1 1 1 H H H 2 2 2 2 2 .",
-            ". . * . . . . H . . . . * . .",
-            "            . . .            ",
-            "            . . .            ",
-            "  D D D     * . .     C C C  ",
-            "  D D D     . . *     C C C  ",
-            "  D D D     . . .     C C C  ",
-        };
-    }
-
-    void initTrack() {
-        // Clockwise path starting from Player A's entry
-        // A enters at top, goes down, right, down, left, up, back
-
-        // Top strip going down (positions 0-4)
-        // Col 14 (center of 3-dot strip)
-        trackRow[0] = 0;  trackCol[0] = 14;
-        trackRow[1] = 1;  trackCol[1] = 14;
-        trackRow[2] = 2;  trackCol[2] = 14;
-        trackRow[3] = 3;  trackCol[3] = 14;
-        trackRow[4] = 4;  trackCol[4] = 14;
-
-        // Turn right, go along row 5 toward right edge (positions 5-11)
-        trackRow[5] = 5;  trackCol[5] = 14;
-        trackRow[6] = 5;  trackCol[6] = 16;
-        trackRow[7] = 5;  trackCol[7] = 18;
-        trackRow[8] = 5;  trackCol[8] = 20;
-        trackRow[9] = 5;  trackCol[9] = 22;
-        trackRow[10] = 5; trackCol[10] = 24;
-        trackRow[11] = 5; trackCol[11] = 26;
-
-        // Turn down, go down right side (positions 12-16)
-        trackRow[12] = 6; trackCol[12] = 26;
-        trackRow[13] = 7; trackCol[13] = 26;
-        trackRow[14] = 8; trackCol[14] = 26;
-        trackRow[15] = 9; trackCol[15] = 26;
-        trackRow[16] = 10; trackCol[16] = 26;
-
-        // Turn left, go along bottom toward center (positions 17-22)
-        trackRow[17] = 10; trackCol[17] = 24;
-        trackRow[18] = 10; trackCol[18] = 22;
-        trackRow[19] = 10; trackCol[19] = 20;
-        trackRow[20] = 10; trackCol[20] = 18;
-        trackRow[21] = 10; trackCol[21] = 16;
-        trackRow[22] = 10; trackCol[22] = 14;
-
-        // Turn up, go up through bottom strip (positions 23-27)
-        trackRow[23] = 11; trackCol[23] = 14;
-        trackRow[24] = 12; trackCol[24] = 14;
-
-        // Continue up? No, we need to complete the circle
-        // Actually for 52 positions, let me recalculate...
-
-        // Let me redesign with proper 52-cell track
-        // Each player gets 13 cells before home stretch
-
-        // Player A: starts at 0, home stretch at 51-55
-        // Player B: starts at 13, home stretch at 51-55
-        // Player C: starts at 26, home stretch at 51-55
-        // Player D: starts at 39, home stretch at 51-55
-
-        // Total outer ring should have 52 cells (13 per player × 4)
-        // But my board has fewer dots. Let me count the actual path cells.
-
-        // Actually, let me just create a proper 52-cell path
-        // that fits within the board coordinates
-
-        // Top vertical strip: 5 cells (rows 0-4, col 14)
-        for (int i = 0; i < 5; i++) {
-            trackRow[i] = i;
-            trackCol[i] = 14;
-        }
-
-        // Top horizontal (row 5): from col 14 to col 26, skipping H at col 14
-        // Actually col 14 is H, so path goes: 12, 10, 8, 6, 4, 2, 0 (left)
-        // and 16, 18, 20, 22, 24, 26 (right)
-        // But we need a continuous path...
-
-        // Let me redesign the board to have a proper continuous track
-        // The track should be a single line going around
-    }
-
-    void initSafeSpots() {
-        safeSpots[0] = 0;   // A start
-        safeSpots[1] = 8;   // Right side
-        safeSpots[2] = 13;  // B start
-        safeSpots[3] = 21;  // Bottom side
-        safeSpots[4] = 26;  // C start
-        safeSpots[5] = 34;  // Left side
-        safeSpots[6] = 39;  // D start
-        safeSpots[7] = 47;  // Top side
-    }
-
-    void initHomeStretches() {
-        // Player A (house 1): row 6, cols 2-10 (left side of center)
-        for (int i = 0; i < 5; i++) {
-            homeStretchRow[0][i] = 6;
-            homeStretchCol[0][i] = 2 + i * 2;
-        }
-
-        // Player B (house 2): row 6, cols 18-26 (right side of center)
-        for (int i = 0; i < 5; i++) {
-            homeStretchRow[1][i] = 6;
-            homeStretchCol[1][i] = 18 + i * 2;
-        }
-
-        // Player C (house 3): col 14, rows 8-12 (bottom strip)
-        for (int i = 0; i < 5; i++) {
-            homeStretchRow[2][i] = 8 + i;
-            homeStretchCol[2][i] = 14;
-        }
-
-        // Player D (house 4): col 14, rows 0-4 (top strip) - but that's the track!
-        // Actually D should go up from bottom...
-        // Let me reconsider. In standard Ludo, home stretch is after completing the circle.
-        // So D's home stretch should be on the left side? No...
-
-        // Let me redesign: each player's home stretch is on their own side
-        // A: top, B: right, C: bottom, D: left
-        // But the board shows 1,2,3,4 on rows 6 and col 14...
-
-        // Actually looking at the board:
-        // Row 6: ". 1 1 1 1 1 H H H 2 2 2 2 2 ."
-        // So 1 is left home stretch, 2 is right home stretch
-        // For 3 and 4, they should be on the vertical strips
-
-        // Let me add 3 and 4 to the board design
-    }
-
-    void initBases() {
-        // Player A: top-left corner (rows 0-2, cols 2-6)
-        baseRow[0][0] = 0; baseCol[0][0] = 2;
-        baseRow[0][1] = 0; baseCol[0][1] = 4;
-        baseRow[0][2] = 2; baseCol[0][2] = 2;
-        baseRow[0][3] = 2; baseCol[0][3] = 4;
-
-        // Player B: top-right corner (rows 0-2, cols 22-26)
-        baseRow[1][0] = 0; baseCol[1][0] = 22;
-        baseRow[1][1] = 0; baseCol[1][1] = 24;
-        baseRow[1][2] = 2; baseCol[1][2] = 22;
-        baseRow[1][3] = 2; baseCol[1][3] = 24;
-
-        // Player C: bottom-right corner (rows 10-12, cols 22-26)
-        baseRow[2][0] = 10; baseCol[2][0] = 22;
-        baseRow[2][1] = 10; baseCol[2][1] = 24;
-        baseRow[2][2] = 12; baseCol[2][2] = 22;
-        baseRow[2][3] = 12; baseCol[2][3] = 24;
-
-        // Player D: bottom-left corner (rows 10-12, cols 2-6)
-        baseRow[3][0] = 10; baseCol[3][0] = 2;
-        baseRow[3][1] = 10; baseCol[3][1] = 4;
-        baseRow[3][2] = 12; baseCol[3][2] = 2;
-        baseRow[3][3] = 12; baseCol[3][3] = 4;
-    }
-};
-
-// ============================================================
-// GAME LOGIC
-// ============================================================
-
 class GameLogic {
 public:
+    int safeSpots[8] = {0, 8, 13, 21, 26, 34, 39, 47};
+
     bool isSafe(int absPos) {
-        int safeSpots[8] = {0, 8, 13, 21, 26, 34, 39, 47};
         for (int i = 0; i < 8; i++) {
             if (safeSpots[i] == absPos) return true;
         }
@@ -299,108 +226,187 @@ public:
         return valid;
     }
 
-    bool movePawn(Player &player, int pawnId, int dice) {
+    // ============ BOARD DISPLAY ============
+
+    void askAndShowBoard(vector<string> &v) {
+        bool choice;
+        cout << "\nShow board? (1 = Yes, 0 = No): ";
+        cin >> choice;
+        cin.ignore();
+
+        if (choice == true) {
+            for (string s : v) {
+                cout << s << endl;
+            }
+        }
+    }
+
+    // ============ STATUS DISPLAY ============
+
+    void showStatus(Player players[], int numPlayers) {
+        cout << "\n========== PAWN STATUS ==========\n";
+        for (int p = 0; p < numPlayers; p++) {
+            cout << "Player " << players[p].house << ": ";
+            for (int i = 0; i < 4; i++) {
+                Pawn &pawn = players[p].pawns[i];
+                cout << "P" << (i + 1) << "[";
+                if (pawn.position == -1) cout << "base";
+                else if (pawn.isHome) cout << "HOME";
+                else if (pawn.position >= 51) cout << "stretch:" << pawn.position;
+                else cout << "track:" << pawn.position;
+                cout << "]  ";
+            }
+            cout << "\n";
+        }
+        cout << "=================================\n";
+    }
+
+    // ============ CAPTURE LOGIC ============
+
+    pair<int, int> checkCapture(Player players[], int numPlayers, int movingPlayerIdx, int absPos) {
+        if (isSafe(absPos)) return {-1, -1};
+
+        for (int p = 0; p < numPlayers; p++) {
+            if (p == movingPlayerIdx) continue;
+
+            for (int pawnId = 0; pawnId < 4; pawnId++) {
+                Pawn &enemy = players[p].pawns[pawnId];
+
+                if (enemy.position >= 0 && enemy.position <= 50 && !enemy.isHome) {
+                    int enemyAbsPos = getAbsPos(players[p], enemy.position);
+
+                    if (enemyAbsPos == absPos) {
+                        return {p, pawnId};
+                    }
+                }
+            }
+        }
+        return {-1, -1};
+    }
+
+    void sendToBase(Player &player, int pawnId) {
+        player.pawns[pawnId].position = -1;
+        player.pawns[pawnId].isActive = false;
+        player.pawns[pawnId].isHome = false;
+        cout << "Player " << player.house << "'s Pawn " << (pawnId + 1)
+             << " was CAPTURED and sent back to base!\n";
+    }
+
+    // ============ MOVE PAWN ============
+
+    bool movePawn(Player players[], int numPlayers, int movingPlayerIdx, int pawnId, int dice) {
+        Player &player = players[movingPlayerIdx];
         Pawn &p = player.pawns[pawnId];
 
+        // Unlock from base
         if (p.position == -1) {
             if (dice != 6) {
-                cout << "Pawn " << (pawnId + 1) << " in base. Need 6!\n";
+                cout << "Pawn " << (pawnId + 1) << " is in base. Need a 6 to unlock!\n";
                 return false;
             }
             p.position = 0;
             p.isActive = true;
-            cout << "Pawn " << (pawnId + 1) << " unlocked! On track.\n";
+            cout << "Pawn " << (pawnId + 1) << " unlocked! Entered the track.\n";
             return true;
         }
 
         int newPos = p.position + dice;
 
         if (newPos > 56) {
-            cout << "Need exact roll for home. Can't move.\n";
+            cout << "Need exact roll to reach home. Can't move.\n";
             return false;
         }
 
         p.position = newPos;
 
+        // Reached home
         if (newPos == 56) {
             p.isHome = true;
             cout << "Pawn " << (pawnId + 1) << " reached HOME!\n";
             return true;
         }
 
+        // Home stretch
         if (newPos >= 51) {
-            cout << "Pawn " << (pawnId + 1) << " on home stretch at " << newPos << "\n";
+            cout << "Pawn " << (pawnId + 1) << " entered home stretch at position " << newPos << "\n";
             return false;
         }
 
+        // On track - check for capture
         int absPos = getAbsPos(player, newPos);
-        cout << "Pawn " << (pawnId + 1) << " moved to " << newPos;
-        cout << " (abs: " << absPos << ")\n";
+        cout << "Pawn " << (pawnId + 1) << " moved to track position " << newPos;
+        cout << " (absolute: " << absPos << ")\n";
 
         if (isSafe(absPos)) {
-            cout << "Safe spot!\n";
+            cout << "Landed on a safe spot - cannot be captured here!\n";
+            return false;
+        }
+
+        pair<int, int> captured = checkCapture(players, numPlayers, movingPlayerIdx, absPos);
+
+        if (captured.first != -1) {
+            sendToBase(players[captured.first], captured.second);
+            cout << ">> CAPTURE SUCCESSFUL! You get an extra turn! <<\n";
+            return true;
         }
 
         return false;
     }
-};
 
-// ============================================================
-// DICE ROLLER
-// ============================================================
+    // ============ EXTRA TURN HANDLING ============
+    // This function handles a complete turn (roll + move) for one player
+    // Returns true if the player earned an extra turn (can be called again)
 
-class DiceRoller {
-public:
-    vector<int> F(int currentPlayer, int t6, vector<int> &numbers) {
-        cout << "\nPress Enter to roll the dice --> ";
-        cin.get();
+    bool playTurn(Player players[], int numPlayers, int currentPlayerIdx, vector<string> &board) {
+        Player &p = players[currentPlayerIdx];
 
-        int diceRoll = (rand() % 6) + 1;
-        numbers.push_back(diceRoll);
+        cout << "\n--------------------------------\n";
+        cout << "PLAYER " << p.house << "'s TURN\n";
+        cout << "--------------------------------\n";
 
-        cout << "Player " << currentPlayer << " rolled a " << diceRoll << "!\n";
+        // Show current status
+        showStatus(players, numPlayers);
 
-        if (diceRoll == 6 && t6 < 2) {
-            t6++;
-            cout << "You got a 6! Roll again...\n";
-            return F(currentPlayer, t6, numbers);
-        }
-        else if (diceRoll == 6) {
-            cout << "You got 3 sixes in a row! Turn terminated.\n";
-            numbers.clear();
-        }
+        // Collect dice rolls (from turn.h)
+        // NOTE: You'll need to include turn.h and call turn() from main,
+        // or pass the rolls vector as parameter. 
+        // For now, this is a placeholder structure.
 
-        return numbers;
-    }
-
-    vector<int> collectRolls(int currentPlayer) {
-        int t6 = 0;
-        vector<int> numbers;
-        return F(currentPlayer, t6, numbers);
+        // Since turn() is in turn.h and uses cin.get(), we can't easily call it here
+        // without including. So the extra turn loop should be in main.cpp instead.
+        
+        // This function is kept simple - the extra turn loop goes in main
+        return false;
     }
 };
-
-// ============================================================
-// MAIN
-// ============================================================
-
 int main() {
     srand(time(0));
 
     bool winner = false;
     int currentPlayerIdx = 0;
-    int numPlayers = 2;
+    int numPlayers;
 
-    cout << "========== LUDO ==========\n";
-    cout << "Enter number of players (2-4): ";
+    vector<string> board;
+    welcome w;
+    w.showTitle();
+    w.th();
+
     cin >> numPlayers;
-    cin.ignore();
+    cin.get();
 
-    while (numPlayers < 2 || numPlayers > 4) {
-        cout << "Invalid! Enter 2-4: ";
-        cin >> numPlayers;
-        cin.ignore();
+    if (w.th2(numPlayers) == false) {
+        cout << "\nGame ends\n";
+        return 0;
     }
+
+    w.pb(board, numPlayers);
+
+    cout << "\nRules:\n";
+    cout << "1. Roll 6 to unlock pawn from base\n";
+    cout << "2. Move pawns by dice value\n";
+    cout << "3. Capture opponents by landing on them (not safe spots)\n";
+    cout << "4. Reach home with exact roll\n";
+    cout << "5. First to get all 4 pawns home wins!\n\n";
 
     Player players[4] = {
         Player('A', 0),
@@ -410,73 +416,89 @@ int main() {
     };
 
     GameLogic logic;
-    DiceRoller roller;
+    logic.showStatus(players, numPlayers);
 
     cout << "\n========== GAME START ==========\n";
 
     while (!winner) {
         Player &p = players[currentPlayerIdx];
+        bool earnedExtra = true;  // Start true to enter the loop at least once
 
-        cout << "\n--------------------------------\n";
-        cout << "Player " << p.house << "'s turn:\n";
-        p.showPawns();
+        // ============ EXTRA TURN LOOP ============
+        // Keep giving turns while player earns extras
+        while (earnedExtra && !winner) {
+            earnedExtra = false;  // Reset for this turn
 
-        vector<int> rolls = roller.collectRolls(currentPlayerIdx + 1);
+            cout << "\n--------------------------------\n";
+            cout << "PLAYER " << p.house << "'s TURN\n";
+            cout << "--------------------------------\n";
 
-        if (rolls.empty()) {
-            cout << "\nTurn terminated (3 sixes).\n";
-        }
-        else {
-            cout << "\nYour rolls: ";
+            logic.showStatus(players, numPlayers);
+
+            // Collect dice rolls
+            vector<int> rolls = turn(currentPlayerIdx + 1);
+
+            if (rolls.empty()) {
+                cout << "\nTurn ended (3 sixes).\n";
+                break;  // Exit extra turn loop
+            }
+
+            cout << "\nRolls: ";
             for (int r : rolls) cout << r << " ";
             cout << "\n";
 
+            // Process each roll
             for (int dice : rolls) {
                 vector<int> valid = logic.getValidPawns(p, dice);
 
                 if (valid.empty()) {
-                    cout << "\nNo valid moves for " << dice << ". Skip.\n";
+                    cout << "\nNo valid moves for " << dice << ".\n";
                     continue;
                 }
 
-                cout << "\nValid pawns for " << dice << ": ";
+                cout << "\nValid pawns: ";
                 for (int id : valid) cout << (id + 1) << " ";
-                cout << "\n";
+                cout << "\nSelect pawn: ";
 
                 int choice;
-                bool ok = false;
-                while (!ok) {
-                    cout << "Select pawn: ";
-                    cin >> choice;
-                    cin.ignore();
-                    choice--;
+                cin >> choice;
+                cin.ignore();
+                choice--;
 
-                    for (int id : valid) {
-                        if (id == choice) {
-                            ok = true;
-                            break;
-                        }
-                    }
-                    if (!ok) cout << "Invalid! Try again.\n";
+                bool ok = false;
+                for (int id : valid) {
+                    if (id == choice) ok = true;
+                }
+                if (!ok) {
+                    cout << "Invalid! Skipping.\n";
+                    continue;
                 }
 
-                bool extra = logic.movePawn(p, choice, dice);
-                p.showPawns();
+                // Move and check if extra turn earned
+                bool extra = logic.movePawn(players, numPlayers, currentPlayerIdx, choice, dice);
+                logic.showStatus(players, numPlayers);
+                logic.askAndShowBoard(board);
 
                 if (extra) {
-                    cout << "Extra turn earned!\n";
+                    earnedExtra = true;
+                    cout << "\n*** Extra turn earned! ***\n";
                 }
+            }
+
+            // Check win after all rolls processed
+            if (p.pawnsAtHome() == 4) {
+                winner = true;
+                cout << "\n\n>>> PLAYER " << p.house << " WINS! <<<\n";
+                break;
             }
         }
 
-        if (p.pawnsAtHome() == 4) {
-            winner = true;
-            cout << "\n\nPLAYER " << p.house << " WINS!\n";
+        // Move to next player only if game not over
+        if (!winner) {
+            currentPlayerIdx = (currentPlayerIdx + 1) % numPlayers;
         }
-
-        currentPlayerIdx = (currentPlayerIdx + 1) % numPlayers;
     }
 
-    cout << "\n\n========== GAME OVER ==========\n";
+    cout << "\n========== GAME OVER ==========\n";
     return 0;
 }
