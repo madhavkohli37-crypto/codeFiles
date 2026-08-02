@@ -1,0 +1,6 @@
+NULL is simply 0 in cpp expmple if we say int x=NULL;
+cout<<x the output is 0 and if we do int*x=NULL; cout<<x<<endl then also the output is 0 because cpp allows NULL as 0 to be a pointer.
+if we do char ch=NULL; the char ch will be 0 in terms of ascii value of 0 which is '\0'
+so ch='\0' if we say char ch=NULL;
+hence if we do cout<<x<<endl; then there will be no output because cout with a char works as printing a string format and it prints characters untill it doesn't
+encounter a '\0' .

@@ -1,0 +1,12 @@
+to get a repository in your pc use command 
+git clone -b (branch name) (repository link)
+before that make sure you are in the path of the place where you want to clone that repository 
+cd (path)      --> to get on that path 
+Now get status to see the status of the repository it will show changes.
+git add . to save changes
+git commit -m "COMMIT MESSAGE " to commit with message 
+git push to push changes .
+FOR CODESPACES :-
+g++ main.cpp -o (filename) to compile
+./filename to run
+   

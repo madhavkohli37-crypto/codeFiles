@@ -1,0 +1,2 @@
+vector<int>v;
+sixeof(v) retrun usually 12 bits because sizeof(object) function returns the static memory consumed 

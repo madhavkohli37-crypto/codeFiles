@@ -1,0 +1,7 @@
+we learnt that how cin.ignore() behaves different than that of cin.get() function. cin.get() function consumes a single character from the input buffer and if we
+do char ch=cin.get() then the character ch stores the input.
+Note --> The character consumed is always in the form of a character only 
+if we do cout<<ch then the output will be 1if we typed 1 in the input buffer  
+But if we do int x=cin.get() and then we do cout<<x then output will be 49 because the ascii of 1 is 49 and 1 in input buffer is treated as 49 in character terms for
+the sake of ascii value
+cin.ignore() just simply ignores the characters.
