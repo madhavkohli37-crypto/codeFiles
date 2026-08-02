@@ -6,6 +6,7 @@ Now get status to see the status of the repository it will show changes.
 git add . to save changes
 git commit -m "COMMIT MESSAGE " to commit with message 
 git push to push changes .
+git pull to pull changes from the repository (used when your friend or colleague makes changes there and you want them on your computer) its like check for updates .
 FOR CODESPACES :-
 g++ main.cpp -o (filename) to compile
 ./filename to run
