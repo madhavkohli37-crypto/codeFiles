@@ -10,4 +10,11 @@ git pull to pull changes from the repository (used when your friend or colleague
 FOR CODESPACES :-
 g++ main.cpp -o (filename) to compile
 ./filename to run
+to rename a file using cmd
+go to the folder containing the file using cd path
+now write ren "oldname" "newname"
+to transfer from one folder to another 
+go to the folder containing file using cd path
+copy/move "filename" "desiredpath"
+
    
