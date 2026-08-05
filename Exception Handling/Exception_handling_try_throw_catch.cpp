@@ -3,6 +3,7 @@ using namespace std;
 int divi(int a,int b) {
     if(b==0) {
         throw "division by 0";
+//nothing below this executes
     }
     return a/b;
 }
