@@ -112,7 +112,7 @@ int MMI(int x) {
         if(r>n) {
             return -1;
         }
-        int ans = ((facto[n]%mod * invfacto[n-r]%mod) * facto[r]%mod )%mod;
+        int ans = ((facto[n]%mod * invfacto[n-r]%mod) * invfacto[r]%mod )%mod;
         return ans;
     }
 int32_t main() {
@@ -133,5 +133,5 @@ int32_t main() {
     for(int i=2;i<=n;i++) {
         invfacto[i]=MMI(facto[i]);
     }
-    cout<<nCr(5,1,facto,invfacto)<<endl;
+    cout<<nCr(5,2,facto,invfacto)<<endl;
 }
