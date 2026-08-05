@@ -104,8 +104,9 @@ int MMI(int x) {
     return mmi;
 }
     int Modulus_Division(int x,int y) {
-        int ans=0;
-        return ans;
+        // calculate the mmi for y under mod;
+        int m=MMI(y);
+        return Modulus_Multiplication(x,m);
     }
     int nCr(int n,int r,int facto[],int invfacto[]) {
         if(r>n) {
