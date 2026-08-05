@@ -64,4 +64,8 @@ The mutex does not stop the whole thread.
 
 It only stops other threads from entering the critical section:
 while join() stops the entire thread.
+THIS MUTEX FUNCTION IS USED TO PREVENT THE RACE CONDITION.
+A race condition occurs when two or more threads access the same shared resource concurrently,
+and at least one of them modifies it, without proper synchronization. Because the execution order of the threads is unpredictable, the final result 
+can vary from run to run.
 */
