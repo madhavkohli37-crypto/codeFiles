@@ -148,6 +148,7 @@ public:
         return x;
     }
     TreeNode<T>* createHBT(T* a, int s, int e) {
+        // note --> if the array 'a' is sorted then the created tree is a Height-Balanced Binary Search Tree. 
         if (s > e) {
             return NULL;
         }
