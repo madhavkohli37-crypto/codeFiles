@@ -1,110 +1,111 @@
-#include<bits/stdc++.h>
+#include <iostream>
 using namespace std;
-template<typename T>
-class MapNode{
-    public:
-    MapNode<T>* next;
+template <typename T> class MapNode {
+public:
+    MapNode<int>* next;
     string key;
-    T val;
+    int val;
     MapNode() {
-        this->next=nullptr;
-        this->key="";
-        this->val=0;
+        this->key = "";
+        this->val = 0;
+        this->next = nullptr;
     }
-    MapNode(string key,T val) {
-        this->key=key;
-        this->val=val;
+    MapNode(string key, int val) {
+        this->key = key;
+        this->val = val;
+        this->next = nullptr;
     }
 };
-template<typename T>
-class HashMap{
-    public:
-    int cs,ts;
-    MapNode<T>**table;
+class HashMap {
+public:
+    MapNode<int>** table;
+    int cs;
+    int ts;
     HashMap() {
-        cs=0,ts=10;
-        table=new MapNode<T>*[ts];
-        for(int i=0;i<ts;i++) {
-            table[i]=nullptr;
+        cs = 0;
+        ts = 10;
+        table = new MapNode<int>*[ts];
+        for (int i = 0; i < ts; i++) {
+            table[i] = nullptr;
         }
     }
-    private:
     void rehashing() {
-        MapNode<T>**oldtable=table;
-        ts*=2;
-        table=new MapNode<T>*[ts];
-        for(int i=0;i<ts;i++) {
-            table[i]=nullptr;
+        MapNode<int>** oldtable = table;
+        ts *= 2;
+        table = new MapNode<int>*[ts];
+        for (int i = 0; i < ts; i++) {
+            table[i] = nullptr;
         }
-        for(int i=0;i<cs;i++) {
-            MapNode<T>*head=oldtable[i];
-            while(head!=nullptr) {
-                insert(head->key,head->val);
-                head=head->next;
+        for (int i = 0; i < cs; i++) {
+            MapNode<int>* head = oldtable[i];
+            while (head != nullptr) {
+                insert(head->key, head->val);
+                head = head->next;
             }
         }
+        delete[] oldtable;
         return;
     }
     int hashfunction(string key) {
-        int sum=0;
-        int multiplier=1;
-        for(int i=0;i<key.size();i++) {
-            sum = ((sum % ts) + ((multiplier % ts) * (key[i] % ts)) % ts) % ts;
+        int sum = 0;
+        int multiplier = 1;
+        for (int i = 0; i < key.size(); i++) {
+            sum =
+                (((sum % ts) + ((key[i] % ts) * (multiplier % ts)) % ts)) % ts;
             multiplier = ((multiplier % ts) * (131 % ts)) % ts;
         }
         return sum;
     }
-    public:
-    void insert(string key,int val) {
-        int index=hashfunction(key);
-        MapNode<T>* head=new MapNode(key,val);
-        head->next=table[index];
-        table[index]=head;
+    void insert(string key, int val) {
+        int index = hashfunction(key);
+        MapNode<int>* node = new MapNode<int>(key, val);
+        node->next = table[index];
+        table[index] = node;
         cs++;
-        if(((cs/ts)*(1.0))>=0.7) {
+        if (((cs / ts) * 1.0) >= 0.7) {
             rehashing();
         }
         return;
     }
     void print() {
-        for(int i=0;i<ts;i++) {
-            cout<<i<<"). ";
-            MapNode<T>*head=table[i];
-            while(head!=nullptr) {
-                cout<<head->key<<" "<<head->val<<" --> ";
-                head=head->next;
+        for (int i = 0; i < ts; i++) {
+            cout << i << " ) . ";
+            MapNode<int>* head = table[i];
+            while (head != nullptr) {
+                cout << head->key << " " << head->val << " --> ";
+                head = head->next;
             }
-            cout<<"NULL\n";
+            cout << "NULL\n";
         }
         return;
     }
-    T& operator [] (string  x) {
-        int index=hashfunction(x);
-        MapNode<T>* head=table[index];
-        while(head!=nullptr) {
-            if(head->key==x) {
+    int& operator[](string x) {
+        int index = hashfunction(x);
+        MapNode<int>* head = table[index];
+        while (head != nullptr) {
+            if (head->key == x) {
                 return head->val;
             }
-            head=head->next;
+            head = head->next;
         }
-        insert(x,T());
-        index=hashfunction(x);
-        head=table[index];
-        while(head!=nullptr) {
-            if(head->key==x) {
+        insert(x, int());
+        index = hashfunction(x);
+        head = table[index];
+        while (head != nullptr) {
+            if (head->key == x) {
                 return head->val;
             }
-            head=head->next;
         }
-         return table[index]->val;
+        return table[index]->val;
     }
 };
+
 int main() {
-    HashMap<int>mp;
-    mp.insert("Madhav",0);
-    mp.insert("Bhoomi",1);
+    HashMap mp;
+    mp.insert("Madhav", 2);
     mp.print();
-    mp["bhoomi"]=5;
-    cout<<mp["bhoomi"];
+    mp["Bhoomi"] = 5;
+    cout << mp["Bhoomi"] << endl;
+    cout << "Hello, World!";
     return 0;
 }
